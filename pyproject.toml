@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cachy-game-optimizer"
+version = "1.0.0"
+description = "Futuristic Game Optimizer for CachyOS - Maximize gaming performance on older hardware"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "CachyOS Game Optimizer", email = "user@localhost.localdomain"}
+]
+keywords = ["gaming", "optimizer", "cachyos", "linux", "performance", "wine", "proton"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console :: Curses",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Games/Entertainment",
+    "Topic :: System :: Hardware",
+]
+dependencies = [
+    "rich>=13.7.0",
+    "textual>=0.52.0",
+    "psutil>=5.9.0",
+    "pyyaml>=6.0",
+    "tomli>=2.0.0",
+    "tomli-w>=1.0.0",
+    "requests>=2.31.0",
+    "packaging>=23.0",
+]
+
+[project.optional-dependencies]
+gui = ["PyQt6>=6.6.0"]
+dev = ["pytest>=7.4.0", "black>=23.0", "mypy>=1.5.0"]
+
+[project.scripts]
+cachy-game-optimizer = "cachy_game_optimizer.main:main"
+cgo = "cachy_game_optimizer.cli:main"
+cgo-gui = "cachy_game_optimizer.gui:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cachy_game_optimizer*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
