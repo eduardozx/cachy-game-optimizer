@@ -1,1 +1,0 @@
-../gamefixes-egs/umu-306130.py

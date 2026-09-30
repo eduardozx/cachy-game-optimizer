@@ -1,1 +1,0 @@
-../gamefixes-umu/umu-genshin.py
