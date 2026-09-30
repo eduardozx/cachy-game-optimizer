@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+cachy_game_optimizer/__init__.py
+cachy_game_optimizer/cli.py
+cachy_game_optimizer/games.py
+cachy_game_optimizer/gui.py
+cachy_game_optimizer/hardware.py
+cachy_game_optimizer/main.py
+cachy_game_optimizer/optimizer.py
+cachy_game_optimizer.egg-info/PKG-INFO
+cachy_game_optimizer.egg-info/SOURCES.txt
+cachy_game_optimizer.egg-info/dependency_links.txt
+cachy_game_optimizer.egg-info/entry_points.txt
+cachy_game_optimizer.egg-info/requires.txt
+cachy_game_optimizer.egg-info/top_level.txt

@@ -1,0 +1,4 @@
+[console_scripts]
+cachy-game-optimizer = cachy_game_optimizer.main:main
+cgo = cachy_game_optimizer.cli:main
+cgo-gui = cachy_game_optimizer.gui:main

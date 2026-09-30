@@ -1,0 +1,141 @@
+#!/bin/bash
+# CachyOS Game Optimizer - CLI Wrapper
+# Provides command-line access to optimizer functions
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
+NC='\033[0m' # No Color
+
+print_header() {
+    echo -e "${MAGENTA}"
+    echo "╔═════════════════════════════════════════════════════════════════════╗"
+    echo "║        CachyOS Game Optimizer - CLI v1.0.0                         ║"
+    echo "║        Futuristic Gaming Performance Suite                         ║"
+    echo "╚═════════════════════════════════════════════════════════════════════╝"
+    echo -e "${NC}"
+}
+
+print_usage() {
+    print_header
+    echo "Usage: cgo <command> [options]"
+    echo ""
+    echo "Commands:"
+    echo "  detect        Detect hardware and show profile"
+    echo "  recommend     Show optimization recommendations"
+    echo "  optimize      Run all recommended optimizations"
+    echo "  optimize-cpu  Run CPU optimizations only"
+    echo "  optimize-gpu  Run GPU optimizations only"
+    echo "  optimize-mem  Run memory optimizations only"
+    echo "  optimize-kernel Run kernel optimizations only"
+    echo "  scan          Scan game libraries"
+    echo "  list          List all games in library"
+    echo "  launch <id>   Launch game by ID"
+    echo "  config <id>   Show game configuration"
+    echo "  tui           Launch TUI application"
+    echo "  help          Show this help"
+    echo ""
+    echo "Examples:"
+    echo "  cgo detect"
+    echo "  cgo optimize"
+    echo "  cgo scan"
+    echo "  cgo list"
+    echo "  cgo launch steam_123456"
+    echo "  cgo tui"
+}
+
+run_python() {
+    if [ -f "$PROJECT_DIR/venv/bin/activate" ]; then
+        source "$PROJECT_DIR/venv/bin/activate"
+    fi
+    python -m cachy_game_optimizer.cli "$@"
+}
+
+case "${1:-help}" in
+    detect)
+        print_header
+        echo -e "${CYAN}Detecting hardware...${NC}"
+        run_python detect
+        ;;
+    recommend)
+        print_header
+        echo -e "${CYAN}Getting recommendations...${NC}"
+        run_python recommend
+        ;;
+    optimize)
+        print_header
+        echo -e "${CYAN}Running all optimizations...${NC}"
+        run_python optimize
+        ;;
+    optimize-cpu)
+        print_header
+        echo -e "${CYAN}Running CPU optimizations...${NC}"
+        run_python optimize --category cpu
+        ;;
+    optimize-gpu)
+        print_header
+        echo -e "${CYAN}Running GPU optimizations...${NC}"
+        run_python optimize --category gpu
+        ;;
+    optimize-mem)
+        print_header
+        echo -e "${CYAN}Running memory optimizations...${NC}"
+        run_python optimize --category memory
+        ;;
+    optimize-kernel)
+        print_header
+        echo -e "${CYAN}Running kernel optimizations...${NC}"
+        run_python optimize --category kernel
+        ;;
+    scan)
+        print_header
+        echo -e "${CYAN}Scanning game libraries...${NC}"
+        run_python scan
+        ;;
+    list)
+        print_header
+        run_python list
+        ;;
+    launch)
+        if [ -z "$2" ]; then
+            echo -e "${RED}Error: Game ID required${NC}"
+            echo "Usage: cgo launch <game_id>"
+            exit 1
+        fi
+        print_header
+        echo -e "${CYAN}Launching game: $2${NC}"
+        run_python launch "$2"
+        ;;
+    config)
+        if [ -z "$2" ]; then
+            echo -e "${RED}Error: Game ID required${NC}"
+            echo "Usage: cgo config <game_id>"
+            exit 1
+        fi
+        print_header
+        run_python config "$2"
+        ;;
+    tui)
+        # Launch TUI directly
+        if [ -f "$PROJECT_DIR/venv/bin/activate" ]; then
+            source "$PROJECT_DIR/venv/bin/activate"
+        fi
+        python -m cachy_game_optimizer.main
+        ;;
+    help|--help|-h)
+        print_usage
+        ;;
+    *)
+        echo -e "${RED}Unknown command: $1${NC}"
+        print_usage
+        exit 1
+        ;;
+esac

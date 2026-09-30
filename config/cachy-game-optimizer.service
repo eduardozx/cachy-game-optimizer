@@ -1,0 +1,14 @@
+[Unit]
+Description=CachyOS Game Optimizer - Boot Optimizations
+After=multi-user.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/kasher/.local/share/cachy-game-optimizer/scripts/cgo optimize
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
